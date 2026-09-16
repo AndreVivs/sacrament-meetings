@@ -1,4 +1,7 @@
+import Image from "next/image";
 import type { SacramentMeeting } from "@/lib/types";
+import { meetingImages } from "@/lib/meeting-images";
+
 
 interface MeetingDetailProps {
   meeting: SacramentMeeting;
@@ -7,6 +10,8 @@ interface MeetingDetailProps {
 export default function MeetingDetail({
   meeting,
 }: MeetingDetailProps) {
+  const imageSrc = meetingImages[meeting.meetingType];
+
   return (
     <article className="mx-auto max-w-3xl rounded-xl border border-border bg-surface p-6 shadow-sm md:p-8">
       <header className="mb-8 border-b border-border pb-5">
@@ -14,11 +19,18 @@ export default function MeetingDetail({
           {meeting.meetingType} meeting
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-foreground">
-          Sacrament Meeting
-        </h1>
+        <Image
+          src={imageSrc}
+          alt={`${meeting.meetingType} sacrament meeting`}
+          width={1200}
+          height={500}
+          className="mb-6 h-64 w-full rounded-lg object-cover"
+          priority
+        />
 
-        <p className="mt-2 text-muted">{meeting.date}</p>
+        <h1 className="text-3xl font-bold">Sacrament Meeting</h1>
+
+        <p className="text-muted">{meeting.date}</p>
       </header>
 
       <div className="space-y-8">
