@@ -1,6 +1,9 @@
 import MeetingCard from "@/components/MeetingCard";
-import { getMeetings } from "@/lib/meetings-db";
-import type { MeetingType, SacramentMeeting } from "@/lib/types";
+import { getBaseUrl } from "@/lib/api";
+import type {
+  MeetingType,
+  SacramentMeeting,
+} from "@/lib/types";
 
 interface MeetingsPageProps {
   searchParams: Promise<{
@@ -20,25 +23,43 @@ export default async function MeetingsPage({
 }: MeetingsPageProps) {
   const { type } = await searchParams;
 
-  const meetings: SacramentMeeting[] = getMeetings();
+  const baseUrl: string = await getBaseUrl();
+
+  const response: Response = await fetch(
+    `${baseUrl}/api/meetings`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch meetings");
+  }
+
+  const meetings: SacramentMeeting[] =
+    (await response.json()) as SacramentMeeting[];
 
   const selectedType: MeetingType | undefined =
     validMeetingTypes.includes(type as MeetingType)
       ? (type as MeetingType)
       : undefined;
 
-  const filteredMeetings: SacramentMeeting[] = selectedType
-    ? meetings.filter(
-        (meeting) => meeting.meetingType === selectedType
-      )
-    : meetings;
+  const filteredMeetings: SacramentMeeting[] =
+    selectedType
+      ? meetings.filter(
+          (meeting) =>
+            meeting.meetingType === selectedType
+        )
+      : meetings;
 
   return (
     <section>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-foreground">
+        <h1 className="font-display text-3xl font-bold text-foreground">
           {selectedType
-            ? `${selectedType.charAt(0).toUpperCase()}${selectedType.slice(1)} Meetings`
+            ? `${selectedType
+                .charAt(0)
+                .toUpperCase()}${selectedType.slice(1)} Meetings`
             : "All Meetings"}
         </h1>
 
