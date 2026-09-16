@@ -37,3 +37,8 @@ export interface SacramentMeeting {
   closingHymn: Hymn;
   closingPrayer: string;
 }
+
+export interface HeaderProps {
+  wardName: string;
+  currentDate: string;
+}
