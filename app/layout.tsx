@@ -1,6 +1,8 @@
 import "./globals.css";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
 import { Inter, Playfair_Display } from "next/font/google";
 
 const inter = Inter({
@@ -18,11 +20,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const currentDate: string = new Date().toLocaleDateString();
+  const currentDate: string =
+    new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
 
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} font-sans`}>
+      <body
+        className={`${inter.variable} ${playfair.variable} flex min-h-screen flex-col font-sans`}
+      >
         <Header
           wardName="Lehi 3rd Ward"
           currentDate={currentDate}

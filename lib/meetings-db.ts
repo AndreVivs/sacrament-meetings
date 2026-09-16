@@ -40,6 +40,37 @@ const meetings: SacramentMeeting[] = [
     closingHymn: { number: 31, title: 'O God, Our Help in Ages Past' },
     closingPrayer: 'Brother Davis',
     announcements: ['Ward temple night: May 10']
+  },
+  {
+    id: 3,
+    date: "2026-09-13",
+    meetingType: "stake",
+    presiding: "Bishop Smith",
+    conducting: "Brother Jones",
+    announcements: ["Ward activity this Friday"],
+    openingHymn: {
+      number: 2,
+      title: "The Spirit of God",
+    },
+    openingPrayer: "Sister Williams",
+    wardBusiness: [],
+    stakeBusiness: false,
+    sacramentHymn: {
+      number: 169,
+      title: "In Remembrance of Thy Suffering",
+    },
+    speakers: [
+      {
+        name: "Brother Davis",
+        topic: "Faith in Jesus Christ",
+        type: "speaker",
+      },
+    ],
+    closingHymn: {
+      number: 31,
+      title: "O God, Our Help in Ages Past",
+    },
+    closingPrayer: "Sister Brown",
   }
   // ... add remaining records
 ];

@@ -1,1 +1,24 @@
-// (single meeting detail + print mode)
+import MeetingDetail from "@/components/MeetingDetail";
+import { getMeetingById } from "@/lib/meetings-db";
+import { notFound } from "next/navigation";
+
+interface MeetingPageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+export default async function MeetingPage({
+  params,
+}: MeetingPageProps) {
+  const { id } = await params;
+
+  const meetingId: number = Number(id);
+  const meeting = getMeetingById(meetingId);
+
+  if (!meeting) {
+    notFound();
+  }
+
+  return <MeetingDetail meeting={meeting} />;
+}

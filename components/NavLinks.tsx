@@ -10,16 +10,8 @@ interface NavLink {
 
 const links: NavLink[] = [
   {
-    href: "/",
-    label: "Current Meeting",
-  },
-  {
     href: "/meetings",
-    label: "Past Meetings",
-  },
-  {
-    href: "/meetings/new",
-    label: "New Meeting",
+    label: "All Meetings",
   },
 ];
 
@@ -28,15 +20,15 @@ export default function NavLinks() {
 
   return (
     <nav aria-label="Main navigation">
-      <ul className="flex flex-wrap gap-2">
+      <ul className="flex gap-2">
         {links.map((link) => {
-          const isActive = pathname === link.href;
+          const isActive = pathname.startsWith(link.href);
 
           return (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-primary text-white"
                     : "text-muted hover:bg-background hover:text-foreground"
