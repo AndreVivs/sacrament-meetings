@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { NavLinksProps } from "@/lib/types";
 
 interface NavLink {
   href: string;
@@ -10,19 +11,47 @@ interface NavLink {
 
 const links: NavLink[] = [
   {
+    href: "/meetings/current",
+    label: "Current Meeting",
+  },
+  {
     href: "/meetings",
     label: "All Meetings",
   },
 ];
 
-export default function NavLinks() {
+export default function NavLinks({
+  currentMeetingId,
+}: NavLinksProps) {
   const pathname = usePathname();
 
   return (
     <nav aria-label="Main navigation">
-      <ul className="flex gap-2">
+      <ul className="flex flex-wrap gap-2">
         {links.map((link) => {
-          const isActive = pathname.startsWith(link.href);
+          const isCurrentMeeting =
+            link.href === "/meetings/current" &&
+            (
+              pathname === "/meetings/current" ||
+              (
+                currentMeetingId !== undefined &&
+                pathname === `/meetings/${currentMeetingId}`
+              )
+            );
+
+          const isAllMeetings =
+            link.href === "/meetings" &&
+            pathname.startsWith("/meetings") &&
+            !(
+              pathname === "/meetings/current" ||
+              (
+                currentMeetingId !== undefined &&
+                pathname === `/meetings/${currentMeetingId}`
+              )
+            );
+
+          const isActive =
+            isCurrentMeeting || isAllMeetings;
 
           return (
             <li key={link.href}>

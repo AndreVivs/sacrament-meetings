@@ -1,10 +1,12 @@
 import Link from "next/link";
-import type { HeaderProps } from "@/lib/types";
 import NavLinks from "./NavLinks";
+import type { HeaderProps } from "@/lib/types";
 
 export default function Header({
   wardName,
   currentDate,
+  currentMeetingId,
+  
 }: HeaderProps) {
   return (
     <header className="border-b border-border bg-surface">
@@ -22,7 +24,7 @@ export default function Header({
           </p>
         </div>
 
-        <NavLinks />
+        <NavLinks currentMeetingId={currentMeetingId} />
       </div>
     </header>
   );

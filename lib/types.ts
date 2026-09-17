@@ -41,4 +41,9 @@ export interface SacramentMeeting {
 export interface HeaderProps {
   wardName: string;
   currentDate: string;
+  currentMeetingId?: number;
+}
+
+export interface NavLinksProps {
+  currentMeetingId?: number;
 }

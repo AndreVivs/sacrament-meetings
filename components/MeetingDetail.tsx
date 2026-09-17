@@ -2,7 +2,6 @@ import Image from "next/image";
 import type { SacramentMeeting } from "@/lib/types";
 import { meetingImages } from "@/lib/meeting-images";
 
-
 interface MeetingDetailProps {
   meeting: SacramentMeeting;
 }
@@ -11,6 +10,13 @@ export default function MeetingDetail({
   meeting,
 }: MeetingDetailProps) {
   const imageSrc = meetingImages[meeting.meetingType];
+
+  const meetingTitle =
+    meeting.meetingType === "stake"
+      ? "Stake Meeting"
+      : meeting.meetingType === "general"
+        ? "General Meeting"
+        : "Sacrament Meeting";
 
   return (
     <article className="mx-auto max-w-3xl rounded-xl border border-border bg-surface p-6 shadow-sm md:p-8">
@@ -21,14 +27,17 @@ export default function MeetingDetail({
 
         <Image
           src={imageSrc}
-          alt={`${meeting.meetingType} sacrament meeting`}
+          alt={`${meeting.meetingType} meeting program`}
           width={1200}
           height={500}
           className="mb-6 h-64 w-full rounded-lg object-cover"
           priority
+          fetchPriority="high"
         />
 
-        <h1 className="text-3xl font-bold">Sacrament Meeting</h1>
+        <h1 className="font-display text-3xl font-bold text-foreground">
+          {meetingTitle}
+        </h1>
 
         <p className="text-muted">{meeting.date}</p>
       </header>
@@ -64,8 +73,10 @@ export default function MeetingDetail({
           {meeting.announcements &&
           meeting.announcements.length > 0 ? (
             <ul className="list-disc space-y-1 pl-5 text-muted">
-              {meeting.announcements.map((announcement) => (
-                <li key={announcement}>{announcement}</li>
+              {meeting.announcements.map((announcement, index) => (
+                <li key={`${announcement}-${index}`}>
+                  {announcement}
+                </li>
               ))}
             </ul>
           ) : (
@@ -103,8 +114,8 @@ export default function MeetingDetail({
 
           {meeting.wardBusiness.length > 0 ? (
             <ul className="list-disc space-y-1 pl-5 text-muted">
-              {meeting.wardBusiness.map((item) => (
-                <li key={item.description}>
+              {meeting.wardBusiness.map((item, index) => (
+                <li key={`${item.description}-${index}`}>
                   {item.description}
                 </li>
               ))}
